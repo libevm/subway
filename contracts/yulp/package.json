@@ -1,0 +1,14 @@
+{
+  "name": "subway-contracts-yulp",
+  "version": "1.0.0",
+  "description": "Contracts in Yul+",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "solc": "0.8.10",
+    "yulp": "^0.2.3"
+  },
+  "scripts": {
+    "compile": "node compile.js"
+  }
+}

@@ -1,0 +1,26 @@
+/// @title Sandwich contract
+object "Sandwich" {
+  // Constructor
+  code {
+    // constructor(address owner)
+
+    // saves owner into bytecode (IMMUTABLE VARIABLE)
+    calldatacopy(dataoffset("Runtime"), sub(codesize(), 32), 32)
+
+    // Copy result
+    datacopy(0, dataoffset("Runtime"), datasize("Runtime"))
+
+    // And the immutable variable
+    return(0, add(datasize("Runtime"), 32))
+  }
+
+  // Runtime code
+  object "Runtime" {
+    code {
+      // Extract out IMMUTABLE VARIABLE owner
+      datacopy(0, datasize("Runtime"), 32)
+
+      return (0, 32)
+    }
+  }
+}

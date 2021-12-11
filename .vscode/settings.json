@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.yul": "solidity",
+        "*.yulp": "solidity",
+    },
+    "solidity.enabledAsYouTypeCompilationErrorCheck": false,
+    "editor.tabSize": 2
+}
