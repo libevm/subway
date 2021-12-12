@@ -28,6 +28,8 @@ contract SandwichTest is DSTest {
     HEVM hevm = HEVM(0x7109709ECfa91a80626fF3989D68f67F5b1DD12D);
 
     function setUp() public {
+        compileYulp();
+
         weth.deposit{value: 10e18}();
 
         wethUsdcPair = IUniswapV2Pair(
@@ -108,6 +110,14 @@ contract SandwichTest is DSTest {
                 revert (0, 0)
             }
         }
+    }
+
+    function compileYulp() internal {
+        string[] memory cmds = new string[](2);
+        cmds[0] = "node";
+        cmds[1] = "scripts/compile.js";
+
+        hevm.ffi(cmds);
     }
 
     function getSandwichYulpBytecode() internal returns (bytes memory) {

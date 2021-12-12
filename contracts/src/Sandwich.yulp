@@ -147,5 +147,8 @@ object "Sandwich" {
         }
       }
     }
+
+    // Stop execution here
+    stop()
   }
 }
