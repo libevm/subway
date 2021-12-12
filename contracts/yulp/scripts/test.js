@@ -22,6 +22,7 @@ const main = async () => {
   })
 
   const contractArgs = ethers.utils.defaultAbiCoder.encode(['address'], [signerAddress])
+  const zeros = '0000000000000000000000000000000000000000000000000000000000000000'
   const tx = await signer.sendTransaction({
     data: '0x' + bytecode + contractArgs.replace('0x', ''),
     type: 0,
@@ -31,13 +32,14 @@ const main = async () => {
   })
   await tx.wait()
 
-  const data = await provider.call({
+  const data = await signer.call({
     to: contractAddress,
-    data: '0x'
+    data: '0x8980f11f' + contractArgs.replace('0x', '') + zeros // recoverERC20(address)
   })
 
   const code = await provider.getCode(contractAddress)
 
+  console.log('bytecode', bytecode)
   console.log('data', data)
   console.log('code', code)
 }
