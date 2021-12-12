@@ -14,6 +14,8 @@ For a sandwich front/back slice, there is only so much optimization that can be 
 - Catch-all function signatures
 - ....
 
+**NOTE: Please be aware that this repository does NOT provide protection against [Uncle Bandit attacks](https://twitter.com/bertcmiller/status/1385294417091760134)**
+
 ## Development
 
 You'll need [NodeJS](https://nodejs.org/en/) on your machine.
