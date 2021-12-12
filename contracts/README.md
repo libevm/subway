@@ -14,6 +14,16 @@ For a sandwich front/back slice, there is only so much optimization that can be 
 - Catch-all function signatures
 - ....
 
+## Gas Usage
+
+![](https://i.imgur.com/5AQQbns.png)
+
+| Single Swap                       | Gas Used |
+| --------------------------------- | -------- |
+| Univ2 Router                      | 109809   |
+| Solidity Inline Assembly Contract | 92422    |
+| Yulp Contracts                    | 92234    |
+
 **NOTE: Please be aware that this repository does NOT provide protection against [Uncle Bandit attacks](https://twitter.com/bertcmiller/status/1385294417091760134)**
 
 ## Development
