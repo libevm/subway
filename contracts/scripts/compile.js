@@ -34,3 +34,5 @@ const bytecode = output.contracts["Sandwich.yul"]["Sandwich"]["evm"]["bytecode"]
 fs.writeFileSync(path.join(OUT_DIR, 'sandwich.out.json'), JSON.stringify(output))
 fs.writeFileSync(path.join(OUT_DIR, 'sandwich.abi'), JSON.stringify(abi))
 fs.writeFileSync(path.join(OUT_DIR, 'sandwich.bytecode'), bytecode)
+
+console.log(bytecode)

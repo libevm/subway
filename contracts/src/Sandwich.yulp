@@ -1,0 +1,151 @@
+/// @title Sandwich contract
+object "Sandwich" {
+  // Constructor
+  code {
+    // constructor(address owner)
+    // saves owner into bytecode (IMMUTABLE VARIABLE)
+    // no SLOAD
+    codecopy(datasize("Runtime"), sub(codesize(), 32), 32)
+
+    // copy runtime code
+    datacopy(0, dataoffset("Runtime"), datasize("Runtime"))
+
+    // return runtime code and shoehorned immutable variable
+    return(0, add(datasize("Runtime"), 32))
+  }
+
+  // Runtime code
+  object "Runtime" {
+    code {
+      const _calldata := 128 // free memory pointer
+
+      // Function signatures
+      const _erc20_xfer_sig := 0xa9059cbb
+      const _pair_swap_sig := 0x022c0d9f
+
+      // Extract out IMMUTABLE VARIABLE owner
+      // Avoids SLOAD
+      // Read more - https://github.com/libevm/cpo
+      datacopy(0, datasize("Runtime"), 32)
+      let owner := mload(0)
+
+      // Not owner? Revert, but still (3, 3) wgmi I guess
+      if iszero(eq(caller(), owner)) {
+        revert (3, 3)
+      }
+
+      // Check function sigs
+      calldatacopy(_calldata, 0, calldatasize())
+      switch mslice(_calldata, 4)
+
+      // RecoverERC20 token
+      case sig"recoverERC20(address token, uint256 balance)" {
+        mstruct recoverERC20Calldata(sig: 4, token: 32, balance: 32)
+
+        // mstore left pads zeros
+        // so we need to start from 252 when doing call
+        // 224 + 32 - 4
+        mstore(224, _erc20_xfer_sig)
+
+        // transfer(address recipient, uint256 amount)
+        mstore(256, owner)
+        mstore(288, recoverERC20Calldata.balance(_calldata))
+
+        // Call transfer
+        if iszero(
+          call(
+            gas(),
+            recoverERC20Calldata.token(_calldata), // Target
+            0,   // Value
+            252, // Memory offset 224 + 28
+            68,  // Length        4 + 32 + 32
+            224,   // Return offset
+            32    // Return length
+          )
+        ) {
+          revert (3, 3)
+        }
+
+        return (0, 0)
+      }
+
+      // Sandwich
+      default {
+        // No function sig, boom
+        mstruct sandwichCalldata(
+          token: 20,
+          pair: 20,
+          amountIn: 16,
+          amountOut: 16,
+          tokenOut: 1
+        )
+
+        // *** Calls token.transfer(pair, amountIn) ****
+        mstore(224, _erc20_xfer_sig)
+
+        // transfer(address recipient, uint256 amount)
+        mstore(256, sandwichCalldata.pair(_calldata))
+        mstore(288, sandwichCalldata.amountIn(_calldata))
+
+        // Call transfer
+        if iszero(
+          call(
+            gas(),
+            sandwichCalldata.token(_calldata), // Target
+            0,   // Value
+            252, // Memory offset 224 + 28
+            68,  // Length        4 + 32 + 32
+            0,   // Return offset
+            0    // Return length
+          )
+        ) {
+          revert (3, 3)
+        }
+
+        // *********
+        /*
+
+          calls pair.swap(
+            tokenOutNo == 0 ? amountOut : 0,
+            tokenOutNo == 1 ? amountOut : 0,
+            address(this),
+            new bytes(0)
+          )
+
+        */
+
+        mstore(224, _pair_swap_sig)
+        
+        // token0 or token1
+        switch sandwichCalldata.tokenOut(_calldata)
+        case 0 {
+          mstore(256, sandwichCalldata.amountOut(_calldata))
+          mstore(288, sandwichCalldata.tokenOut(_calldata))
+        }
+        case 1 {
+          mstore(256, sandwichCalldata.tokenOut(_calldata))
+          mstore(288, sandwichCalldata.amountOut(_calldata))
+        }
+
+        // address(this)
+        mstore(320, address())
+        // new bytes(0) - empty bytes
+        mstore(352, 0x80)
+
+        if iszero(
+          call(
+            gas(),
+            sandwichCalldata.pair(_calldata), // Target
+            0,   // Value
+            252, // Memory offset 224 + 28
+            164,  // Length        4 + 32 + 32
+            0,   // Return offset
+            0    // Return length
+          )
+        ) {
+          revert (3, 3)
+        }
+      }
+    }
+  }
+}
