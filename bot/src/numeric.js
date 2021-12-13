@@ -118,6 +118,9 @@ export const calcSandwichState = (
 
   // Return
   return {
+    // NOT PROFIT
+    // Profit = post gas
+    revenue: backrun.amountOut.sub(optimalSandwichWethIn),
     optimalSandwichWethIn,
     userAmountIn,
     userMinRecv,
