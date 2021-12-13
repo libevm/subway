@@ -1,0 +1,17 @@
+{
+  "name": "subway-bot",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Example sandwich bot",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "abi-decoder": "^2.4.0",
+    "chalk": "^5.0.0",
+    "dotenv": "^10.0.0",
+    "ethers": "^5.5.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1"
+  }
+}

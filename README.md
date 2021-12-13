@@ -8,9 +8,9 @@ Remember that having highly optimized contracts is just one part of the equation
 
 - [x] Smart contracts
 - [] Bot tech stack
-  - [] mempool reading
-  - [] tx decoding
-  - [] logging
+  - [x] mempool reading
+  - [x] tx decoding
+  - [x] logging
   - [] bundle firing
   - [] algos
     - [] optimal sandwich amount in
