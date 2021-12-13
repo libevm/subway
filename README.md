@@ -12,9 +12,9 @@ Remember that having highly optimized contracts is just one part of the equation
   - [x] tx decoding
   - [x] logging
   - [] bundle firing
-  - [] algos
-    - [] optimal sandwich amount in
-    - [] sandwich profitability
+  - [x] algos
+    - [x] optimal sandwich amount in
+    - [x] sandwich profitability
   - [] misc
     - [] block base fee calc
     - [] bribing gas calc
