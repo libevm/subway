@@ -326,7 +326,7 @@ const main = async () => {
   // Listen to the mempool on local node
   wssProvider.on("pending", (txHash) =>
     sandwichUniswapV2RouterTx(txHash).catch((e) => {
-      logFatal(`txhash=${txHash} error ${e.toString()}`);
+      logFatal(`txhash=${txHash} error ${JSON.stringify(e)}`);
     })
   );
 };

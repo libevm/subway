@@ -1,20 +1,31 @@
 # Subway
 
-This repository will act as a practical example on how to perform sandwich attacks on UniswapV2 pairs.
+A practical example on how to perform sandwich attacks on UniswapV2 pairs.
 
-Remember that having highly optimized contracts is just one part of the equation, you'll need to build out a tech stack to execute on the opportunities.
+Having highly optimized contracts is just one part of the equation, a tech stack is just as important as the contracts to execute on the opportunities.
 
-## TODO:
+## Overview
 
-- [x] Smart contracts
-- [] Bot tech stack
-  - [x] mempool reading
-  - [x] tx decoding
-  - [x] logging
-  - [] bundle firing
-  - [x] algos
-    - [x] optimal sandwich amount in
-    - [x] sandwich profitability
-  - [] misc
-    - [] block base fee calc
-    - [] bribing gas calc
+The contracts are written in Yul+ and Solidity, and contains the **bare minimum** needed to perform a sandwich attack (i.e. `swap` and `transfer`). **They do NOT protect against [uncle bandit attacks](https://twitter.com/bertcmiller/status/1385294417091760134) so use at your own risk.**
+
+The goal of this bot is to act as a low barrier of entry, reference source code for aspiring new searchers (hence, JavaScript). This bot contains:
+
+- read from the mempool
+- decode transaction data
+- simple logging system
+- profit calculation algos
+- gas bribe calculation
+- bundle firing
+- misc
+  - doing math in JS
+  - calculating next base fee
+
+While the bot is functional, the bot logic is a very simplistic one and does not contain a lot of the features that many advance searchers have (but not including), such as:
+
+- circuit breakers
+- poison token checker
+- caching system
+- robust logging system (e.g. graphana)
+- various gas saving ALPHAs
+
+As such, this bot is intended as a piece of educational content, and not for production use.

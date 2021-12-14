@@ -5,6 +5,9 @@
   "description": "Example sandwich bot",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "bot": "node index.js"
+  },
   "dependencies": {
     "@ethereumjs/tx": "^3.4.0",
     "abi-decoder": "^2.4.0",
