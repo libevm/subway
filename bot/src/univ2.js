@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { TOKENS, uniswapV2Pair } from "./constants.js";
+import { uniswapV2Pair } from "./constants.js";
 import { match } from "./utils.js";
 
 /* 
@@ -55,7 +55,7 @@ export const getUniv2DataGivenIn = (aIn, reserveA, reserveB) => {
   // Underflow
   let newReserveB = reserveB.sub(bOut);
   if (newReserveB.lt(0) || newReserveB.gt(reserveB)) {
-    newReserveB = toBN(1);
+    newReserveB = ethers.BigNumber.from(1);
   }
 
   // Overflow
@@ -80,7 +80,7 @@ export const getUniv2DataGivenOut = (bOut, reserveA, reserveB) => {
   // Underflow
   let newReserveB = reserveB.sub(bOut);
   if (newReserveB.lt(0) || reserveB.gt(reserveB)) {
-    newReserveB = toBN(1);
+    newReserveB = ethers.BigNumber.from(1);
   }
 
   const numerator = reserveA.mul(bOut).mul(1000);

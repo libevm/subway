@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { parseUnits } from "@ethersproject/units";
-import { getUniv2DataGivenIn, getUniv2DataGivenOut } from "./univ2.js";
+import { getUniv2DataGivenIn } from "./univ2.js";
 
 const BN_18 = parseUnits("1");
 
@@ -120,9 +120,9 @@ export const calcSandwichState = (
   return {
     // NOT PROFIT
     // Profit = post gas
-    revenue: backrun.amountOut.sub(optimalSandwichWethIn),
+    revenue: backrunState.amountOut.sub(optimalSandwichWethIn),
     optimalSandwichWethIn,
-    userAmountIn,
+    userAmountIn: userWethIn,
     userMinRecv,
     reserveState: {
       reserveWeth,

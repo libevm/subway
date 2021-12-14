@@ -16,6 +16,7 @@ const ENV_VARS = [
   "RPC_URL_WSS",
   "PRIVATE_KEY",
   "FLASHBOTS_AUTH_KEY",
+  "SANDWICH_CONTRACT",
 ];
 
 for (let i = 0; i < ENV_VARS.length; i++) {
@@ -32,6 +33,9 @@ if (!hasEnv) {
 // Contracts
 export const CONTRACTS = {
   UNIV2_ROUTER: "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+
+  // Sandwich contract
+  SANDWICH: process.env.SANDWICH_CONTRACT,
 };
 
 // Helpful tokens for testing

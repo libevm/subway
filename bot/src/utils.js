@@ -1,3 +1,5 @@
+import { ethers } from "ethers";
+
 // GM I hate JS
 export const match = (a, b, caseIncensitive = true) => {
   if (a === null || a === undefined) return false;
@@ -39,4 +41,30 @@ export const stringifyBN = (o, toHex = false) => {
   } else {
     return o;
   }
+};
+
+export const toRpcHexString = (bn) => {
+  let val = bn.toHexString();
+  val = "0x" + val.replace("0x", "").replace(/^0+/, "");
+
+  if (val == "0x") {
+    val = "0x0";
+  }
+
+  return val;
+};
+
+export const calcNextBlockBaseFee = (curBlock) => {
+  const baseFee = curBlock.baseFeePerGas;
+  const gasUsed = curBlock.gasUsed;
+  const targetGasUsed = curBlock.gasLimit.div(2);
+  const delta = gasUsed.sub(targetGasUsed);
+
+  const newBaseFee = baseFee.add(
+    baseFee.mul(delta).div(targetGasUsed).div(ethers.BigNumber.from(8))
+  );
+
+  // Add 0-9 wei so it becomes a different hash each time
+  const rand = Math.floor(Math.random() * 10);
+  return newBaseFee.add(rand);
 };
