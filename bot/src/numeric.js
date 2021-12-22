@@ -31,7 +31,7 @@ export const binarySearch = (
   }
 
   // No negatives
-  const ret = right.add(left).div(2).sub(tolerance);
+  const ret = right.add(left).div(2);
   if (ret.lt(0)) {
     return ethers.constants.Zero;
   }
