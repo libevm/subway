@@ -59,7 +59,7 @@ export const getUniv2DataGivenIn = (aIn, reserveA, reserveB) => {
   }
 
   // Overflow
-  let newReserveA = reserveA.add(aInWithFee);
+  let newReserveA = reserveA.add(aIn);
   if (newReserveA.lt(reserveA)) {
     newReserveA = ethers.constants.MaxInt256;
   }
