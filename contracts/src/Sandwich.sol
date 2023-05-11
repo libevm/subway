@@ -53,7 +53,7 @@ contract Sandwich {
         address memUser = user;
 
         assembly {
-            // You can only access teh fallback function if you're authorized
+            // You can only access the fallback function if you're authorized
             if iszero(eq(caller(), memUser)) {
                 // Ohm (3, 3) makes your code more efficient
                 // WGMI
