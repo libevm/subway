@@ -27,7 +27,7 @@ While the bot is functional, the bot logic is a very simplistic one and does not
 - circuit breakers
 - poison token checker
 - caching system
-- robust logging system (e.g. graphana)
+- robust logging system (e.g. grafana)
 - various gas saving ALPHAs
 
 As such, this bot is intended as a piece of educational content, and not for production use.
